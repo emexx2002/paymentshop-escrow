@@ -6,55 +6,82 @@ import Modal from '../../components/Modal/Modal'
 import { Button } from '../../components/Button/Button'
 import StepComponent from '../../components/stepComponent/StepComponent'
 import Link from 'next/link'
+import useFetchWithParams from '../../hooks/useFetchWithParams'
+import { EscrowServices } from '../../services/escrow'
+import Spinner from '../../components/spinner/Spinner'
 
 const HomeScreen = () => {
+  const { data, isLoading, refetch } = useFetchWithParams(
+    ["query-all-escrow-page", {
+      page: 1, size: 25,
+    }],
+    EscrowServices.getEscrow,
+    {
+      onSuccess: (data: any) => {
+        // console.log(data.data);
+      },
+      keepPreviousData: false,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  )
+  console.log(data)
   return (
     <div className='w-full'>
-      <h3 className='text-[#1F2126] font-semibold'>Hi Rachael 👋🏼</h3>
-      <h5 className='text-sm text-[#5F738C] '>View and manage your escrow activities</h5>
+      {
+        isLoading ?
+          <div className='w-full flex justify-center'>
+            <Spinner color='#000' /> </div> :
+          <>
+            <h3 className='text-[#1F2126] font-semibold'>Hi Rachael 👋🏼</h3>
+            <h5 className='text-sm text-[#5F738C] '>View and manage your escrow activities</h5>
 
-      <div className="w-full mt-10 mb-8 bg-[url('/assets/vector.svg')] h-[142px] bg-no-repeat bg-right rounded-[10px] bg-[#1F2126] p-6">
-        <h3 className='text-sm text-white'>Total Active Escrow</h3>
+            <div className="w-full mt-10 mb-8 bg-[url('/assets/vector.svg')] h-[142px] bg-no-repeat bg-right rounded-[10px] bg-[#1F2126] p-6">
+              <h3 className='text-sm text-white'>Total Active Escrow</h3>
 
-        <div className='flex mt-6 items-center gap-[50px] md:gap-[72px] flex-nowrap'>
-          <div>
-            <h3 className='text-[#AAB7C6] text-sm'>Value</h3>
-            <span className='text-xl text-white font-semibold'>₦30,000.00</span>
-          </div>
-          <div>
-            <h3 className='text-[#AAB7C6] text-sm'>Volume</h3>
-            <span className='text-xl text-white font-semibold'>2</span>
-          </div>
-        </div>
+              <div className='flex mt-6 items-center gap-[50px] md:gap-[72px] flex-nowrap'>
+                <div>
+                  <h3 className='text-[#AAB7C6] text-sm'>Value</h3>
+                  <span className='text-xl text-white font-semibold'>₦30,000.00</span>
+                </div>
+                <div>
+                  <h3 className='text-[#AAB7C6] text-sm'>Volume</h3>
+                  <span className='text-xl text-white font-semibold'>2</span>
+                </div>
+              </div>
 
-      </div>
+            </div>
 
-      <Link href={"/dashboard/pay-with-escrow"}>
-        <div className='w-full mb-8 h-[71px] bg-white flex justify-between items-center px-5 rounded-[10px] border border-[#E1E6ED]'>
-          <div>
-            <h3 className='text-[#1F2126] font-semibold'>Pay with Escrow</h3>
-            <h5 className='text-[#5F738C] text-sm'>Make payment using secured escrow service</h5>
+            <Link href={"/dashboard/pay-with-escrow"}>
+              <div className='w-full mb-8 h-[71px] bg-white flex justify-between items-center px-5 rounded-[10px] border border-[#E1E6ED]'>
+                <div>
+                  <h3 className='text-[#1F2126] font-semibold'>Pay with Escrow</h3>
+                  <h5 className='text-[#5F738C] text-sm'>Make payment using secured escrow service</h5>
 
-          </div>
+                </div>
 
-        </div>
-      </Link>
+              </div>
+            </Link>
 
 
 
-      <div className='w-full bg-white min-h-[210px]  p-5 rounded-[10px] border border-[#E1E6ED]'>
-        <div className='grid md:grid-cols-2 grid-cols-1'>
-          <TabBar onChange={() => { }} tabs={['Active', 'Completed', 'Cancelled']} />
+            <div className='w-full bg-white min-h-[210px]  p-5 rounded-[10px] border border-[#E1E6ED]'>
+              <div className='grid md:grid-cols-2 grid-cols-1'>
+                <TabBar onChange={() => { }} tabs={['Active', 'Completed', 'Cancelled']} />
 
-        </div>
+              </div>
 
-        <div className='flex  mt-2 gap-[18px] flex-col divide-y-[1px]'>
-          <EscrowInfo />
-          <EscrowInfo />
+              <div className='flex  mt-2 gap-[18px] flex-col divide-y-[1px]'>
+                <EscrowInfo />
+                <EscrowInfo />
 
-        </div>
+              </div>
 
-      </div>
+            </div>
+          </>
+
+      }
+
 
 
     </div>

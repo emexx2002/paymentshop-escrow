@@ -5,7 +5,7 @@ import { AuthActions, useAuth } from "../zustand/auth.store";
 export const createApiClient = (auth = true) => {
   const http = axios.create({
     baseURL: Config.apiUrl,
-    withCredentials: true, // Enables sending cookies
+    // withCredentials: true, // Enables sending cookies
   });
 
   http.interceptors.request.use(

@@ -50,6 +50,8 @@ const PaywithScreen = () => {
     {
       onSuccess: (data) => {
         toast.success(`payment sent to ${form.values.sellerEmail}`)
+        form.resetForm()
+        router.push('/dashboard')
       },
       onError: (error: any) => {
         toast.error(
@@ -205,7 +207,7 @@ const PaywithScreen = () => {
             }
 
             <div className='flex items-center justify-between'>
-              <Button label='cancel' onClick={() => handleStepClick(currentStep - 1)} className='bg-white border px-6 !text-[#1F2126]' variant='outlined' />
+              <Button type='button' label='cancel' onClick={() => handleStepClick(currentStep - 1)} className='bg-white border px-6 !text-[#1F2126]' variant='outlined' />
               {
                 currentStep < 3 ? (
                   <Button className='px-6' onClick={() => handleStepClick(currentStep + 1)} label='continue' type='button' />) :

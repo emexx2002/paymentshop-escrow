@@ -8,6 +8,7 @@ import bank from "../../utils/banks.json";
 import { AuthServices } from '../../services/auth';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 
 
@@ -56,7 +57,8 @@ const RegisterScreen = () => {
         },
         {
             onSuccess: (data) => {
-               router.push('/auth/login')
+                toast.success("regristration succefull")
+                router.push('/auth/login')
             }
         }
     )
@@ -72,14 +74,14 @@ const RegisterScreen = () => {
                     <form className='my-6' onSubmit={form.handleSubmit}>
                         <div className='grid gap-2 grid-cols-2'>
                             <div>
-                                <TextInput placeholder="Enter your first name"  name='firstName' label='First name' />
+                                <TextInput placeholder="Enter your first name" name='firstName' label='First name' />
                             </div>
                             <div>
-                                <TextInput placeholder="Enter your last name"  name='lastname' label='Last name' />
+                                <TextInput placeholder="Enter your last name" name='lastname' label='Last name' />
                             </div>
                         </div>
                         <div className='my-4'>
-                            <TextInput placeholder="Enter your email"  name='phone' label='phone number' />
+                            <TextInput placeholder="Enter your email" name='phone' label='phone number' />
                         </div>
                         <div className='my-4'>
                             <TextInput placeholder="Enter your email" type="email" name='email' label='email' />
@@ -120,7 +122,7 @@ const RegisterScreen = () => {
                         <div className='my-4'>
                             <TextInput name='password' type="password" label='password' placeholder="Enter your password" />
                         </div>
-                        <Button isLoading={handleRegister.isLoading} disabled={!form.isValid} size='large' label='Sign in' className='w-full  flex items-center !my-6 justify-center' />
+                        <Button isLoading={handleRegister.isLoading} disabled={!form.isValid} size='large' label='Sign Up' className='w-full  flex items-center !my-6 justify-center' />
 
                         <span className='my-4 text-sm'>Don’t have an account?<Link className='text-[#398DFA]' href={"/"}> Sign in</Link> </span>
 

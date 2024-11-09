@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import { AuthServices } from '../../services/auth';
 import { AuthActions } from '../../zustand/auth.store';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 
 const validationSchema = Yup.object({
@@ -40,9 +41,12 @@ const LoginScreen = () => {
         },
         {
             onSuccess: (data) => {
-                AuthActions.setProfile(data.data)
-                AuthActions.setToken(data.data.id)
+                toast.success("login successfully")
+                AuthActions.setProfile(data.data.account)
+                AuthActions.setToken(data.data.jwt)
                 router.push('/dashboard')
+            },onError: (error: any) => {
+                toast.error("something went wrong! try again")
             }
         }
     )
