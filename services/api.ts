@@ -5,14 +5,17 @@ import { AuthActions, useAuth } from "../zustand/auth.store";
 export const createApiClient = (auth = true) => {
   const http = axios.create({
     baseURL: Config.apiUrl,
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   http.interceptors.request.use(
     function (config: any) {
       const token: any = useAuth.getState().token;
 
-  
+
 
       if (auth) {
         if (token) {
