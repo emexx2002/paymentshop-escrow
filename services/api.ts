@@ -5,55 +5,41 @@ import { AuthActions, useAuth } from "../zustand/auth.store";
 export const createApiClient = (auth = true) => {
   const http = axios.create({
     baseURL: Config.apiUrl,
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    withCredentials: true, // Enables sending cookies
   });
 
   http.interceptors.request.use(
     function (config: any) {
-      const token: any = useAuth.getState().token;
+      const token = useAuth.getState().token;
 
-
-
-      if (auth) {
-        if (token) {
-          config.headers = {
-            ...config.headers, Authorization: `${token}`,
-
-          };
-
-          // config.headers = {...config.headers, 'content-Type':'application/x-www-form-urlencoded'}
-        }
-
+      if (auth && token) {
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${token}`, // Adds Bearer prefix for Authorization
+        };
       }
 
-      console.log(config.headers, token);
-      // console.log(config);
       return config;
     },
     function (error) {
-      // Do something with request error
+      // Handle request error
       return Promise.reject(error);
     }
   );
 
   http.interceptors.response.use(
-    (request) => {
-      return request;
+    (response) => {
+      return response;
     },
-    (err) => {
-      if (err.response) {
-        if (
-          err.response.data &&
-          err.response.data.message === "Token Expired"
-        ) {
+    (error) => {
+      if (error.response) {
+        // Check for token expiration or invalid token message
+        if (error.response.data?.message === "Token Expired") {
           AuthActions.logout();
           window.location.href = "/login";
         }
       }
-      return Promise.reject(err);
+      return Promise.reject(error);
     }
   );
 
