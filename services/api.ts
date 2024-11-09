@@ -5,21 +5,25 @@ import { AuthActions, useAuth } from "../zustand/auth.store";
 export const createApiClient = (auth = true) => {
   const http = axios.create({
     baseURL: Config.apiUrl,
-
+    withCredentials: true
   });
 
   http.interceptors.request.use(
     function (config: any) {
       const token: any = useAuth.getState().token;
 
+  
+
       if (auth) {
         if (token) {
           config.headers = {
             ...config.headers, Authorization: `${token}`,
+
           };
 
           // config.headers = {...config.headers, 'content-Type':'application/x-www-form-urlencoded'}
         }
+
       }
 
       console.log(config.headers, token);
