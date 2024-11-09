@@ -184,15 +184,15 @@ const PaywithScreen = () => {
                   <div className='px-[15px] mb-8 w-full flex flex-col divide-y bg-[#F9FBFC] rounded-[10px] '>
                     <div className='flex py-[15px] items-center justify-between'>
                       <h3 className='text-sm text-[#5F738C]'>Vendor's name</h3>
-                      <h3 className='text-sm text-[#1F2126] font-semibold'>Abass Onibata</h3>
+                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.sellerFirstName} {form.values.sellerLastName}</h3>
                     </div>
                     <div className='flex py-[15px] items-center justify-between'>
                       <h3 className='text-sm text-[#5F738C]'>Phone Number</h3>
-                      <h3 className='text-sm text-[#1F2126] font-semibold'>080 0000 0000</h3>
+                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.sellerPhone}</h3>
                     </div>
                     <div className='flex py-[15px] items-center justify-between'>
                       <h3 className='text-sm text-[#5F738C]'>Email</h3>
-                      <h3 className='text-sm text-[#1F2126] font-semibold'>abasonibata@gmail.com</h3>
+                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.sellerEmail}</h3>
                     </div>
                   </div>
 
