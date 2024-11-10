@@ -58,7 +58,7 @@ const RegisterScreen = () => {
         {
             onSuccess: (data) => {
                 toast.success("regristration succefull")
-                router.push('/auth/login')
+                router.push('/')
             }
         }
     )
