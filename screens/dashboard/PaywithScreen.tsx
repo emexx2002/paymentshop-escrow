@@ -16,6 +16,7 @@ const PaywithScreen = () => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isAgreed, setIsAgreed] = useState(false) 
+  
 
   const handleStepClick = (step: any) => {
     if (step < 1) {
@@ -55,7 +56,7 @@ const PaywithScreen = () => {
       },
       onError: (error: any) => {
         toast.error(
-          "something went wrong! try again"
+          error.response.data.message
         )
       }
     }
