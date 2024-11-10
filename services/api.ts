@@ -32,11 +32,12 @@ export const createApiClient = (auth = true) => {
       return response;
     },
     (error) => {
-      if (error.response) {
+      if (error) {
+        // console.log(error.response);
         // Check for token expiration or invalid token message
-        if (error.response.data?.message === "Token Expired") {
+        if (error.data?.message === "Bad Jwt tokend" || error.status === 401) {
           AuthActions.logout();
-          window.location.href = "/login";
+          window.location.href = "/";
         }
       }
       return Promise.reject(error);

@@ -46,7 +46,8 @@ const LoginScreen = () => {
                 AuthActions.setToken(data.data.jwt)
                 router.push('/dashboard')
             },onError: (error: any) => {
-                toast.error("something went wrong! try again")
+                // console.log(error.response.data.message);
+                toast.error(error.response.data.message)
             }
         }
     )

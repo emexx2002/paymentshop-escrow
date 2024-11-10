@@ -16,7 +16,7 @@ export default function Custom404() {
       router.replace('/dashboard');
     } else {
       // If token is absent, redirect to login
-      router.replace('/login');
+      router.replace('/');
     }
   }, [router]);
 
