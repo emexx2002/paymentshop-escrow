@@ -52,7 +52,7 @@ const ViewBuyer = () => {
           <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
             <h3 className="text-sm text-[#5F738C]">Product Name</h3>
             <h3 className="text-sm text-[#1F2126] font-semibold">Nike Shoes</h3>
-          </div> 
+          </div>
           <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
             <h3 className="text-sm text-[#5F738C]">Description</h3>
             <h3 className="text-sm text-[#1F2126] font-semibold">
