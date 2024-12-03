@@ -15,7 +15,7 @@ export const useAuth = create(
       {
         loggedIn: false,
         token: null as string | null | AxiosBasicCredentials,
-        profile: null,
+        profile: null as null | any,
         role: null as ROLE | null | string,
       },
       (set) => ({

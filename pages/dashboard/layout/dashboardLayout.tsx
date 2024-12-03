@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     <Link className='px-[10px] text-sm font-semibold text-[#1F2126]' href={"#"}>Vendors</Link>
 
                 </header>
-                <div className='flex w-full  mx-auto max-w-[630px] py-12'>
+                <div className='flex w-full  mx-auto justify-center py-12'>
                     {children}
                 </div>
 

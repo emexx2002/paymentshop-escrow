@@ -3,13 +3,16 @@ import DashboardLayout from './layout/dashboardLayout'
 import HomeScreen from '../../screens/dashboard/HomeScreen'
 import EscrowDetails from '../../screens/dashboard/Escrow-details'
 import ViewBuyer from '../../screens/dashboard/ViewBuyer'
+import { useAuth } from '../../zustand/auth.store'
 
 const index = () => {
+    const role = useAuth((s) => s.profile?.role)
     return (
         <DashboardLayout>
-            <HomeScreen />
-            {/* <EscrowDetails /> */}
-            {/* <ViewBuyer/> */}
+            {/* <HomeScreen /> */}
+            {
+                role === "BUYER" ? <ViewBuyer /> : <EscrowDetails />
+            }
         </DashboardLayout>
     )
 }

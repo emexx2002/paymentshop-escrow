@@ -63,7 +63,7 @@ const PaywithScreen = () => {
   )
 
   return (
-    <div className='w-full' >
+    <div className='w-full max-w-[630px]' >
       <Modal open={open} onClick={() => setOpen(false)}>
         <div>
 

@@ -10,7 +10,6 @@ import useFetchWithParams from '../../hooks/useFetchWithParams'
 import { EscrowServices } from '../../services/escrow'
 import Spinner from '../../components/spinner/Spinner'
 import { formatAmount } from '../../utils/Helpfunctions'
-import { useRouter } from 'next/router'
 
 
 const tabs = ['Active', 'Completed', 'Cancelled']
@@ -40,13 +39,13 @@ const HomeScreen = () => {
   // console.log(details?.totalEscrowValue)
 
   return (
-    <div className='w-full max-w-[630px]'>
+    <div className='w-full'>
       {
         isLoading ?
           <div className='w-full flex justify-center'>
             <Spinner color='#000' /> </div> :
           <>
-            <h3 className='text-[#1F2126] font-semibold'>Hi  👋🏼</h3>
+            <h3 className='text-[#1F2126] font-semibold'>Hi Rachael 👋🏼</h3>
             <h5 className='text-sm text-[#5F738C] '>View and manage your escrow activities</h5>
 
             <div className="w-full mt-10 mb-8 bg-[url('/assets/vector.svg')] h-[142px] bg-no-repeat bg-right rounded-[10px] bg-[#1F2126] p-6">
@@ -119,11 +118,55 @@ const HomeScreen = () => {
 
 const EscrowInfo = ({ details }: { details: any }) => {
   const [open, setIsOpen] = useState(false)
-  const router = useRouter()
   return (
     <>
-   
-      <div onClick={() => router.push("/dashboard/escrow-details")} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
+      <Modal open={open} onClick={() => setIsOpen(false)}>
+        <div className='md:w-[620px] h-[514px]'>
+          <div className='flex items-center justify-between'>
+            <div>
+              <h3 className='text-base text-[#1F2126] font-semibold '>Escrow details</h3>
+              <h5 className='text-sm text-[#5F738C]'>Review the details of this escrow below</h5>
+            </div>
+            <Label label='in-progress' />
+          </div>
+
+          <div className='px-[15px] mt-8 w-full flex flex-col divide-y bg-[#F9FBFC] rounded-[10px] '>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Product name</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>Nike</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Description</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>Purchase of a nike shoe</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Quantity</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>1</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Amount</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>₦30,000.00</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Vendor's name</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>Abass Onibata</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Phone Number</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>080 0000 0000</h3>
+            </div>
+            <div className='flex py-[15px] items-center justify-between'>
+              <h3 className='text-sm text-[#5F738C]'>Email</h3>
+              <h3 className='text-sm text-[#1F2126] font-semibold'>abasonibata@gmail.com</h3>
+            </div>
+          </div>
+
+          <Button onClick={() => setIsOpen(false)} label='close' className='mt-8 px-6 ml-auto' />
+
+        </div>
+
+      </Modal>
+      <div onClick={() => setIsOpen(true)} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
         <div>
           <h3 className='text-sm text-[#1F2126] font-semibold '>{formatAmount(details.amount)}</h3>
           <h5 className='text-xs text-[#5F738C] '>Abass Shoes</h5>
