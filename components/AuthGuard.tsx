@@ -1,4 +1,3 @@
-// components/AuthGuard.js
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../zustand/auth.store';
@@ -6,13 +5,22 @@ import { useAuth } from '../zustand/auth.store';
 export default function AuthGuard({ children }: { children: any }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
+    console.log(router.pathname)
 
     useEffect(() => {
         const token: any = useAuth.getState().token;
         if (!token) {
-            router.push('/');
+            if (router.pathname.includes("/invite")) {
+                setIsAuthenticated(true);
+            } else {
+                router.push('/');
+            }
         } else {
-            setIsAuthenticated(true);
+            if (router.pathname === '/' || router.pathname === '/create-account') {
+                router.push('/dashboard');
+            } else {
+                setIsAuthenticated(true);
+            }
         }
     }, [router]);
 

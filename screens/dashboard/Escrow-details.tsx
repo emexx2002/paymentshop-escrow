@@ -1,9 +1,27 @@
 import { FaArrowLeft } from "react-icons/fa6"; // For the "Back" button
 import { useRouter } from "next/router"; // For navigation
 import { PiCopyLight } from "react-icons/pi";
+import { useQuery } from "react-query";
+import { EscrowServices } from "../../services/escrow";
 
 const EscrowDetails = () => {
   const router = useRouter();
+
+  const {id}:any = router.query;
+  console.log(id);
+
+  const {data: EscrowData, isLoading} = useQuery(
+    ["query-escrow-details", id],
+   () => EscrowServices.getEscrowById(id),
+    {
+      onSuccess: (data: any) => {
+        console.log(data.data);
+      
+      },
+      keepPreviousData: false,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    })
 
   const data = {
     status: "In Progress",
@@ -15,7 +33,7 @@ const EscrowDetails = () => {
     phoneNumber: "080 0000 0000",
     email: "rachael@gmail.com",
     timeline: [
-      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment" },
+      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer" },
       { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered" },
       { time: "03:00 PM", text: "Request payment", action: "Request payment" },
       { time: "03:00 PM", text: "Escrow complete" },
@@ -40,7 +58,7 @@ const EscrowDetails = () => {
         </div>
 
         {/* Main Section */}
-        <div className="mt-6 flex gap-6">
+        <div className="mt-6 flex-wrap flex gap-6">
           {/* Left Section: Details */}
           <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             {/* Status */}
@@ -91,7 +109,7 @@ const EscrowDetails = () => {
 
           {/* Right Section: Timeline */}
           <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <div className="flex items-start gap-4 relative">
+            {/* <div className="flex items-start gap-4 relative">
               <div className="flex flex-col items-center">
                 <input
                   type="checkbox"
@@ -116,7 +134,7 @@ const EscrowDetails = () => {
                 </button>
               </div>
               <h5 className="text-xs text-[#5F738C] absolute right-0">03:00 PM</h5>
-            </div>
+            </div> */}
             {data.timeline.map((item, index) => (
               <div key={index} className="relative flex items-start gap-4 ">
                 {/* Checkbox & Line */}
@@ -142,12 +160,12 @@ const EscrowDetails = () => {
                   <p className="text-sm font-semibold text-gray-800">{item.text}</p>
                   <p className="text-xs text-gray-500">Additional description for the event.</p>
                   {item.action && (
-                    <button className="mt-2 px-3 py-1 border bg-gray-400 text-sm text-white rounded-full">
+                    <button disabled={index !== 0} className="mt-2 disabled:bg-gray-400 px-3 mr-2 py-1 border bg-blue-500 text-sm text-white rounded-full">
                       {item.action}
                     </button>
                   )}
                   {item.action1 && (
-                    <button className="mt-2 px-3 py-1 border bg-blue-500 text-sm text-white rounded-full">
+                    <button  className="mt-2 px-3 py-1 border border-blue-500 text-sm rounded-full">
                       {item.action1}
                     </button>
                   )}

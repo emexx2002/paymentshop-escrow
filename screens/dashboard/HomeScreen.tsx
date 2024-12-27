@@ -19,7 +19,7 @@ const HomeScreen = () => {
   const [activetab, setActiveTab] = useState(tabs[0])
   const { data, isLoading, refetch } = useFetchWithParams(
     ["query-all-escrow-page", {
-      page: 1, size: 25,
+      page: 0, size: 25,
     }],
     EscrowServices.getEscrow,
     {
@@ -123,10 +123,10 @@ const EscrowInfo = ({ details }: { details: any }) => {
   return (
     <>
    
-      <div onClick={() => router.push("/dashboard/escrow-details")} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
+      <div onClick={() => router.push(`/dashboard/escrow-details/${details.uuid}`)} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
         <div>
           <h3 className='text-sm text-[#1F2126] font-semibold '>{formatAmount(details.amount)}</h3>
-          <h5 className='text-xs text-[#5F738C] '>Abass Shoes</h5>
+          <h5 className='text-xs text-[#5F738C] '>{details.virtualAccountName}</h5>
         </div>
 
         <div className='flex gap-6  justify-between items-center'>

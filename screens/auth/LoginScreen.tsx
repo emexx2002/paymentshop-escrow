@@ -63,6 +63,23 @@ const LoginScreen = () => {
                             <TextInput placeholder="Enter your email" type="email" name='email' label='email' />
                         </div>
                         <div className='my-4'>
+                            <label htmlFor="role" className='block capitalize text-sm font-normal text-[#5F738C]'>Sign in as</label>
+                            <select
+                                id="role"
+                                name="role"
+                                onChange={form.handleChange}
+                                onBlur={form.handleBlur}
+                                value={form.values.role}
+                                className='mt-1 block w-full h-[44px] bg-white border pl-3 pr-10 py-2 text-base border-gray-300  sm:text-sm rounded-md'
+                            >
+                                <option value="BUYER">Buyer</option>
+                                <option value="SELLER">Seller</option>
+                            </select>
+                            {form.touched.role && form.errors.role ? (
+                                <div className='text-red-500 text-sm'>{form.errors.role}</div>
+                            ) : null}
+                        </div>
+                        <div className='my-4'>
                             <TextInput name='password' type="password" label='password' placeholder="Enter your password" />
                         </div>
                         <Button isLoading={handleLogin.isLoading} size='large' label='Sign in' className='w-full  flex items-center !my-6 justify-center' />
