@@ -40,6 +40,19 @@ const ViewBuyer = () => {
   
   )
 
+  const handleReleasePayment = useMutation(async () => {
+    await EscrowServices.releaseEscrowPayment(id);
+    
+  } , {      
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      console.log(error);  
+    }
+  }
+)
+
   // Example data for display (replace with actual API data if available)
   console.log(EscrowData)
 
@@ -112,6 +125,7 @@ const ViewBuyer = () => {
                 <div className="flex flex-col items-center">
                   <input
                     type="checkbox"
+                    checked={EscrowData?.data?.status === "CANCELLED" ? false : true}
                     className="w-5 h-5 z-10 relative appearance-none border border-[#9DBCDC] rounded checked:bg-[#29B32F] checked:border-[#29B32F] checked:after:content-['✔'] checked:after:text-white checked:after:block checked:after:text-center"
                     readOnly
                   />
@@ -139,6 +153,7 @@ const ViewBuyer = () => {
 
                   <input
                     type="checkbox"
+                    checked={EscrowData?.data?.status === "ACCEPTED"}
                     className="w-5 h-5 z-10 relative appearance-none border border-[#9DBCDC] rounded checked:bg-[#29B32F] checked:border-[#29B32F] checked:after:content-['✔'] checked:after:text-white checked:after:block checked:after:text-center"
                     readOnly
                   />
@@ -160,6 +175,7 @@ const ViewBuyer = () => {
                 <div className="flex flex-col items-center">
                   <input
                     type="checkbox"
+                    checked={EscrowData?.data?.status === "DELIVERED"}
                     className="w-5 h-5 z-10 relative appearance-none border border-[#9DBCDC] rounded checked:bg-[#29B32F] checked:border-[#29B32F] checked:after:content-['✔'] checked:after:text-white checked:after:block checked:after:text-center"
                     readOnly
                   />
@@ -195,6 +211,9 @@ const ViewBuyer = () => {
                 <div>
                   <h3 className="text-sm text-[#1F2126] font-semibold">Pay seller to complete this order</h3>
                   <h5 className="text-xs text-[#5F738C]">Tap on the button below to complete this order.</h5>
+                  <button onClick={() => handleReleasePayment.mutate()}  disabled={handleCancelPayment.isLoading}  className="mt-2 px-3 py-1 border border-[#E1E6ED] text-sm text-[#1F2126] rounded-xl">
+                   {handleCancelPayment.isLoading && <Spinner height={12} width={12} />} Cancel payment
+                  </button>
                 </div>
                 <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
               </div>

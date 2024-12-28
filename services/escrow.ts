@@ -12,6 +12,7 @@ export const EscrowServices= {
     },
 
     buyerCancelEscrow: (id:string) => createApiClient().patch(`/escrow/buyer/cancel/${id}`),
-    sellerCancelOrAcceptEscrow: (id:string, payload:any) => createApiClient().patch(`/escrow/seller/cancel/${id}`, payload),
+    sellerCancelOrAcceptEscrow: (id:string, payload:any) => createApiClient().patch(`/escrow/${id}`, payload),
     releaseEscrowPayment: (id:string) => createApiClient().patch(`/escrow/payment/${id}`),
+    setEscrowDelivered: (id:string) => createApiClient().patch(`/escrow/status/${id}`),
 }

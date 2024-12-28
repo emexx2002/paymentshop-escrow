@@ -1,7 +1,7 @@
 import { FaArrowLeft } from "react-icons/fa6"; // For the "Back" button
 import { useRouter } from "next/router"; // For navigation
 import { PiCopyLight } from "react-icons/pi";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { EscrowServices } from "../../services/escrow";
 
 const EscrowDetails = () => {
@@ -10,7 +10,7 @@ const EscrowDetails = () => {
   const {id}:any = router.query;
   console.log(id);
 
-  const {data: EscrowData, isLoading} = useQuery(
+  const {data: EscrowData, isLoading, refetch} = useQuery(
     ["query-escrow-details", id],
    () => EscrowServices.getEscrowById(id),
     {
@@ -33,12 +33,58 @@ const EscrowDetails = () => {
     phoneNumber: "080 0000 0000",
     email: "rachael@gmail.com",
     timeline: [
-      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer" },
-      { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered" },
-      { time: "03:00 PM", text: "Request payment", action: "Request payment" },
-      { time: "03:00 PM", text: "Escrow complete" },
+      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer", action1Func: () => handleCancel.mutate(), actionFunc: () => handleAccept.mutate(), checked: ["ACCEPTED", "DELIVERED"].includes(EscrowData?.data?.status) ? true : false },
+      { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered", actionFunc: () => handleMarkDelivered.mutate(), checked: EscrowData?.data?.status === "DELIVERED" ? true : false },
+      // { time: "03:00 PM", text: "Request payment", action: "Request payment", actionFunc: () => console.log("Request Payment") },
+      { time: "03:00 PM", text: "Escrow complete", checked: EscrowData?.data?.status === "COMPLETED" ? true : false },
     ],
   };
+
+  const handleCancel = useMutation(async () => {
+    const body = {
+      action: "cancel",
+    }
+    await EscrowServices.sellerCancelOrAcceptEscrow(id, body);
+
+  }, {
+    onSuccess: () => {
+      console.log("Escrow cancelled");
+      refetch()
+    }
+  });
+
+  const handleAccept = useMutation(async () => {
+    const body = {
+      action: "accept",
+    }
+    await EscrowServices.sellerCancelOrAcceptEscrow(id, body);
+
+  }, {
+    onSuccess: () => {
+      console.log("Escrow cancelled");
+      refetch()
+    }
+  });
+
+  const handleMarkDelivered = useMutation(async () => {
+    await EscrowServices.setEscrowDelivered(id);
+
+  }, {
+    onSuccess: () => {
+      console.log("Marked as delivered");
+      refetch()
+    }
+  })
+
+  // const handleRequestPayment = useMutation(async () => {
+  //   await EscrowServices.(id);  
+
+  // }, {
+  //   onSuccess: () => {
+  //     console.log("Payment requested");
+  //     refetch()
+  //   }
+  // })
 
   return (
     <div className=" bg-gray-50 py-8 px-6 flex justify-center">
@@ -66,13 +112,13 @@ const EscrowDetails = () => {
               <p className="text-sm text-gray-500">Status</p>
               <div className="flex items-center gap-2 bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-900 rounded-full">
                 <span className="w-2 h-2 bg-blue-900 rounded-full"></span>
-                Pending
+                {EscrowData?.data?.status}
               </div>
             </div>
 
             {/* Other Details */}
             {[
-              { label: "Buyer Name", value: data.BuyerName },
+              { label: "Buyer Name", value: EscrowData?.data?.status },
               {
                 label: "Phone number",
                 value: (
@@ -83,9 +129,9 @@ const EscrowDetails = () => {
                 ),
               },
               { label: "Product name", value: data.productName },
-              { label: "Description", value: data.description },
-              { label: "Amount", value: data.amount },
-              { label: "Quantity", value: data.quantity },
+              { label: "Description", value: EscrowData?.data?.description },
+              { label: "Amount", value: `₦${EscrowData?.data?.amount.toLocaleString()}` },
+              { label: "Quantity", value: EscrowData?.data?.quantity },
               {
                 label: "Email",
                 value: (
@@ -109,39 +155,16 @@ const EscrowDetails = () => {
 
           {/* Right Section: Timeline */}
           <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            {/* <div className="flex items-start gap-4 relative">
-              <div className="flex flex-col items-center">
-                <input
-                  type="checkbox"
-                  className="w-5 h-5 z-10 relative appearance-none border border-[#9DBCDC] rounded checked:bg-[#29B32F] checked:border-[#29B32F] checked:after:content-['✔'] checked:after:text-white checked:after:block checked:after:text-center"
-                  readOnly
-                />
-                <div
-                  style={{
-                    height: "80px",
-                    width: "1px",
-                    borderLeft: "1px dashed #9DBCDC",
-                  }}
-                />
-              </div>
-              <div>
-                <h3 className="text-sm text-[#1F2126] font-semibold">Escrow payment sent</h3>
-                <h5 className="text-xs text-[#5F738C]">
-                  We have sent the escrow payment to the seller.
-                </h5>
-                <button className="mt-2 px-3 py-1 border border-[#E1E6ED] text-sm text-[#1F2126] rounded-xl">
-                  Cancel payment
-                </button>
-              </div>
-              <h5 className="text-xs text-[#5F738C] absolute right-0">03:00 PM</h5>
-            </div> */}
+            
             {data.timeline.map((item, index) => (
               <div key={index} className="relative flex items-start gap-4 ">
                 {/* Checkbox & Line */}
                 <div className="flex flex-col items-center">
                   <input
                     type="checkbox"
-                    className="w-5 h-5 appearance-none border border-blue-300 rounded-none"
+                    readOnly
+                    checked={item.checked}
+                    className="w-5 h-5 accent-green-500 disabled:!accent-green-500 text-white border border-blue-300 rounded-none"
 
                   />
                   {index < data.timeline.length - 1 && (
@@ -159,20 +182,20 @@ const EscrowDetails = () => {
                 <div className="">
                   <p className="text-sm font-semibold text-gray-800">{item.text}</p>
                   <p className="text-xs text-gray-500">Additional description for the event.</p>
-                  {item.action && (
-                    <button disabled={index !== 0} className="mt-2 disabled:bg-gray-400 px-3 mr-2 py-1 border bg-blue-500 text-sm text-white rounded-full">
-                      {item.action}
-                    </button>
+                  {(item.action && !item.checked && (index === 0 || data?.timeline[index - 1].checked)) && (
+                  <button onClick={item.actionFunc} className="mt-2 disabled:bg-gray-400 px-3 mr-2 py-1 border bg-blue-500 text-sm text-white rounded-full">
+                    {item.action}
+                  </button>
                   )}
-                  {item.action1 && (
-                    <button  className="mt-2 px-3 py-1 border border-blue-500 text-sm rounded-full">
-                      {item.action1}
-                    </button>
+                  { (item.action1 && !item.checked && (index === 0 || data?.timeline[index - 1].checked)) && (
+                  <button onClick={item.action1Func}  className="mt-2 px-3 py-1 border border-blue-500 text-sm rounded-full">
+                    {item.action1}
+                  </button>
                   )}
                 </div>
 
                 {/* Time */}
-                <p className="text-xs text-[#5F738C] absolute right-0">{item.time}</p>
+                {/* <p className="text-xs text-[#5F738C] absolute right-0">{item.time}</p> */}
               </div>
             ))}
           </div>
