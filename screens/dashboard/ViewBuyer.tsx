@@ -211,9 +211,13 @@ const ViewBuyer = () => {
                 <div>
                   <h3 className="text-sm text-[#1F2126] font-semibold">Pay seller to complete this order</h3>
                   <h5 className="text-xs text-[#5F738C]">Tap on the button below to complete this order.</h5>
-                  <button onClick={() => handleReleasePayment.mutate()}  disabled={handleCancelPayment.isLoading}  className="mt-2 px-3 py-1 border border-[#E1E6ED] text-sm text-[#1F2126] rounded-xl">
-                   {handleCancelPayment.isLoading && <Spinner height={12} width={12} />} Cancel payment
+                  {
+                    EscrowData?.data?.status === "DELIVERED" &&
+                    <button onClick={() => handleReleasePayment.mutate()}  disabled={handleReleasePayment.isLoading}  className="mt-2 px-3 py-1 border border-[#E1E6ED] bg-blue-500 text-sm text-white bg-primary rounded-xl">
+                   {handleReleasePayment.isLoading && <Spinner height={12} width={12} />} Release payment
                   </button>
+                  }
+                  
                 </div>
                 <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
               </div>
