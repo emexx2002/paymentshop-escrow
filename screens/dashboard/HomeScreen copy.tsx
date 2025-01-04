@@ -127,7 +127,7 @@ const EscrowInfo = ({ details }: { details: any }) => {
               <h3 className='text-base text-[#1F2126] font-semibold '>Escrow details</h3>
               <h5 className='text-sm text-[#5F738C]'>Review the details of this escrow below</h5>
             </div>
-            <Label label='in-progress' />
+            {/* <Label label='in-progress' /> */}
           </div>
 
           <div className='px-[15px] mt-8 w-full flex flex-col divide-y bg-[#F9FBFC] rounded-[10px] '>
@@ -173,7 +173,7 @@ const EscrowInfo = ({ details }: { details: any }) => {
         </div>
 
         <div className='flex gap-6  justify-between items-center'>
-          <Label label='in-progress' />
+          {/* <Label label='in-progress' /> */}
           <FaArrowRight color='#5F738C' className='text-[#5F738C]' />
 
         </div>

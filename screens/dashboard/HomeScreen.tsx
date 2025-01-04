@@ -11,6 +11,7 @@ import { EscrowServices } from '../../services/escrow'
 import Spinner from '../../components/spinner/Spinner'
 import { formatAmount } from '../../utils/Helpfunctions'
 import { useRouter } from 'next/router'
+import { useAuth } from '../../zustand/auth.store'
 
 
 const tabs = ['Active', 'Completed', 'Cancelled']
@@ -24,8 +25,8 @@ const HomeScreen = () => {
     EscrowServices.getEscrow,
     {
       onSuccess: (data: any) => {
-        // console.log(data.data);
-        setDetails(data.data)
+        console.log(data);
+        setDetails(data)
       },
       keepPreviousData: false,
       refetchOnWindowFocus: false,
@@ -86,15 +87,15 @@ const HomeScreen = () => {
 
               <div className='flex  mt-2 gap-[18px] flex-col divide-y-[1px]'>
                 {
-                  details.details && details.details.length === 0 ? <h3 className='text-sm text-center text-[#5F738C]'>No active escrow</h3> :
+                  details && details.details.length === 0 ? <h3 className='text-sm text-center text-[#5F738C]'>No active escrow</h3> :
 
-                  details.details && details.details.filter((items: any, i: number) => {
+                  details && details.details.filter((items: any, i: number) => {
                       if (activetab === "Active") {
                         return items
                       } else if (activetab === "Completed") {
-                        return items.status === "Completed"
+                        return items.escrow.status === "COMPLETED"
                       } else if (activetab === "Cancelled") {
-                        return items.status === "Cancelled"
+                        return items.escrow.status === "CANCELED"
                       }
 
 
@@ -119,18 +120,19 @@ const HomeScreen = () => {
 
 const EscrowInfo = ({ details }: { details: any }) => {
   const [open, setIsOpen] = useState(false)
+  const role = useAuth((state) => state.profile.role)
   const router = useRouter()
   return (
     <>
    
-      <div onClick={() => router.push(`/dashboard/escrow-details/${details.uuid}`)} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
-        <div>
-          <h3 className='text-sm text-[#1F2126] font-semibold '>{formatAmount(details.amount)}</h3>
-          <h5 className='text-xs text-[#5F738C] '>{details.virtualAccountName}</h5>
+      <div onClick={() => router.push(`/dashboard/escrow-details/${details.escrow.uuid}`)} className='w-full  pt-[18px] cursor-pointer flex justify-between items-center h-[36px]'>
+        <div> 
+          <h3 className='text-sm text-[#1F2126] font-semibold '>{formatAmount(details.escrow.amount)}</h3>
+          <h5 className='text-xs text-[#5F738C] '>{details.product.productName} - {role === "BUYER" ? `${details.product.seller.firstName} ${details.product.seller.lastName}` : `${details.product.buyer.firstName} ${details.product.buyer.lastName}` }</h5>
         </div>
 
         <div className='flex gap-6  justify-between items-center'>
-          <Label label='in-progress' />
+          <Label label={details.escrow.status} />
           <FaArrowRight color='#5F738C' className='text-[#5F738C]' />
 
         </div>
