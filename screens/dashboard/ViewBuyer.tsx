@@ -13,7 +13,7 @@ const ViewBuyer = () => {
   console.log(id);
 
   const { data: EscrowData, isLoading, refetch } = useQuery(
-    ["query-escrow-details", id],
+    ["query-escrow-details-id", id],
     () => EscrowServices.getEscrowById(id),
     {
       onSuccess: (data: any) => {

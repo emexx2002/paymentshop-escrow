@@ -87,9 +87,9 @@ const HomeScreen = () => {
 
               <div className='flex  mt-2 gap-[18px] flex-col divide-y-[1px]'>
                 {
-                  details && details.details.length === 0 ? <h3 className='text-sm text-center text-[#5F738C]'>No active escrow</h3> :
+                  details?.details && details?.details?.length === 0 ? <h3 className='text-sm text-center text-[#5F738C]'>No active escrow</h3> :
 
-                  details && details.details.filter((items: any, i: number) => {
+                  details && details?.details?.filter((items: any, i: number) => {
                       if (activetab === "Active") {
                         return items
                       } else if (activetab === "Completed") {

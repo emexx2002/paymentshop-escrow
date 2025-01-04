@@ -11,7 +11,7 @@ const EscrowDetails = () => {
   console.log(id);
 
   const {data: EscrowData, isLoading, refetch} = useQuery(
-    ["query-escrow-details", id],
+    ["query-escrow-details-id2", id],
    () => EscrowServices.getEscrowById(id),
     {
       onSuccess: (data: any) => {
