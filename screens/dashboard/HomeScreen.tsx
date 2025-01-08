@@ -18,6 +18,7 @@ const tabs = ['Active', 'Completed', 'Cancelled']
 const HomeScreen = () => {
   const [details, setDetails] = useState<any>({})
   const [activetab, setActiveTab] = useState(tabs[0])
+  const profile = useAuth((s) => s.profile)
   const { data, isLoading, refetch } = useFetchWithParams(
     ["query-all-escrow-page", {
       page: 0, size: 25,
@@ -47,7 +48,7 @@ const HomeScreen = () => {
           <div className='w-full flex justify-center'>
             <Spinner color='#000' /> </div> :
           <>
-            <h3 className='text-[#1F2126] font-semibold'>Hi  👋🏼</h3>
+            <h3 className='text-[#1F2126] font-semibold'>Hi  {profile.firstName} 👋🏼</h3>
             <h5 className='text-sm text-[#5F738C] '>View and manage your escrow activities</h5>
 
             <div className="w-full mt-10 mb-8 bg-[url('/assets/vector.svg')] h-[142px] bg-no-repeat bg-right rounded-[10px] bg-[#1F2126] p-6">

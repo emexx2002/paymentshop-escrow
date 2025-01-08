@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'; // For navigation
 import { useMutation, useQuery } from 'react-query';
 import { EscrowServices } from '../../services/escrow';
 import Spinner from '../../components/spinner/Spinner';
+import Label from '../../components/Label/Label';
 
 const ViewBuyer = () => {
   const router = useRouter();
@@ -74,12 +75,7 @@ const ViewBuyer = () => {
 
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Status</h3>
-                <div className="flex items-center px-3 py-1 rounded-full bg-[#FDE2BF] text-[#6D3F04] text-sm font-semibold gap-2">
-
-                  <span className="w-2 h-2 rounded-full bg-[#F79B24] inline-block"></span>
-
-                  <span>{EscrowData?.data?.status}</span>
-                </div>
+                <Label label={EscrowData?.data?.status} />
 
               </div>
 

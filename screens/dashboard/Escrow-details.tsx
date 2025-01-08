@@ -3,20 +3,21 @@ import { useRouter } from "next/router"; // For navigation
 import { PiCopyLight } from "react-icons/pi";
 import { useMutation, useQuery } from "react-query";
 import { EscrowServices } from "../../services/escrow";
+import Label from "../../components/Label/Label";
 
 const EscrowDetails = () => {
   const router = useRouter();
 
-  const {id}:any = router.query;
+  const { id }: any = router.query;
   console.log(id);
 
-  const {data: EscrowData, isLoading, refetch} = useQuery(
+  const { data: EscrowData, isLoading, refetch } = useQuery(
     ["query-escrow-details-id2", id],
-   () => EscrowServices.getEscrowById(id),
+    () => EscrowServices.getEscrowById(id),
     {
       onSuccess: (data: any) => {
         console.log(data.data);
-      
+
       },
       keepPreviousData: false,
       refetchOnWindowFocus: false,
@@ -110,10 +111,8 @@ const EscrowDetails = () => {
             {/* Status */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
               <p className="text-sm text-gray-500">Status</p>
-              <div className="flex items-center gap-2 bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-900 rounded-full">
-                <span className="w-2 h-2 bg-blue-900 rounded-full"></span>
-                {EscrowData?.data?.status}
-              </div>
+              <Label label={EscrowData?.data?.status} />
+
             </div>
 
             {/* Other Details */}
@@ -155,7 +154,7 @@ const EscrowDetails = () => {
 
           {/* Right Section: Timeline */}
           <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            
+
             {data.timeline.map((item, index) => (
               <div key={index} className="relative flex items-start gap-4 ">
                 {/* Checkbox & Line */}
@@ -183,14 +182,14 @@ const EscrowDetails = () => {
                   <p className="text-sm font-semibold text-gray-800">{item.text}</p>
                   <p className="text-xs text-gray-500">Additional description for the event.</p>
                   {(item.action && !item.checked && (index === 0 || data?.timeline[index - 1].checked)) && (
-                  <button onClick={item.actionFunc} className="mt-2 disabled:bg-gray-400 px-3 mr-2 py-1 border bg-blue-500 text-sm text-white rounded-full">
-                    {item.action}
-                  </button>
+                    <button onClick={item.actionFunc} className="mt-2 disabled:bg-gray-400 px-3 mr-2 py-1 border bg-blue-500 text-sm text-white rounded-full">
+                      {item.action}
+                    </button>
                   )}
-                  { (item.action1 && !item.checked && (index === 0 || data?.timeline[index - 1].checked)) && (
-                  <button onClick={item.action1Func}  className="mt-2 px-3 py-1 border border-blue-500 text-sm rounded-full">
-                    {item.action1}
-                  </button>
+                  {(item.action1 && !item.checked && (index === 0 || data?.timeline[index - 1].checked)) && (
+                    <button onClick={item.action1Func} className="mt-2 px-3 py-1 border border-blue-500 text-sm rounded-full">
+                      {item.action1}
+                    </button>
                   )}
                 </div>
 

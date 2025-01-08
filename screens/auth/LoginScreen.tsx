@@ -24,7 +24,6 @@ const LoginScreen = () => {
     const router = useRouter();
     const userSignUpInfo = {
         email: "",
-        role: "BUYER",
         password: ""
     };
     const form = useFormik({
@@ -41,9 +40,12 @@ const LoginScreen = () => {
         },
         {
             onSuccess: (data) => {
+                console.log(data.data)
                 toast.success("login successfully")
-                AuthActions.setProfile(data.data.account)
-                AuthActions.setToken(data.data.jwt)
+                const token = data.headers.authorization.replace('Bearer ', '');
+                AuthActions.setToken(token)
+                AuthActions.setProfile(data.data)
+                // AuthActions.setToken(data.headers.authorization)
                 router.push('/dashboard')
             },onError: (error: any) => {
                 // console.log(error.response.data.message);
@@ -62,23 +64,7 @@ const LoginScreen = () => {
                         <div>
                             <TextInput placeholder="Enter your email" type="email" name='email' label='email' />
                         </div>
-                        <div className='my-4'>
-                            <label htmlFor="role" className='block capitalize text-sm font-normal text-[#5F738C]'>Sign in as</label>
-                            <select
-                                id="role"
-                                name="role"
-                                onChange={form.handleChange}
-                                onBlur={form.handleBlur}
-                                value={form.values.role}
-                                className='mt-1 block w-full h-[44px] bg-white border pl-3 pr-10 py-2 text-base border-gray-300  sm:text-sm rounded-md'
-                            >
-                                <option value="BUYER">Buyer</option>
-                                <option value="SELLER">Seller</option>
-                            </select>
-                            {form.touched.role && form.errors.role ? (
-                                <div className='text-red-500 text-sm'>{form.errors.role}</div>
-                            ) : null}
-                        </div>
+                       
                         <div className='my-4'>
                             <TextInput name='password' type="password" label='password' placeholder="Enter your password" />
                         </div>

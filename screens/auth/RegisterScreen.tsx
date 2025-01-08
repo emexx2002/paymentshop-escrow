@@ -33,7 +33,6 @@ const RegisterScreen = () => {
     const router = useRouter()
 
     const userSignUpInfo = {
-        "role": "BUYER",
         "email": "",
         "phone": "",
         "password": "",
