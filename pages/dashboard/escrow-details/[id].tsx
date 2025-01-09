@@ -11,6 +11,7 @@ import Spinner from '../../../components/spinner/Spinner'
 
 const EscrowDetail = () => {
     // const role = useAuth((s) => s.profile?.role)
+    const profile = useAuth((s) => s.profile)
     const router = useRouter();
     const [role, setRole] = useState("")
 
@@ -28,7 +29,7 @@ const EscrowDetail = () => {
             refetchOnMount: true,
         })
 
-    console.log(EscrowData);
+    console.log(EscrowData?.data?.product?.seller?.uuid);
 
     return (
         <DashboardLayout>
@@ -39,7 +40,7 @@ const EscrowDetail = () => {
                     <Spinner />
 
                 </div> :
-                role === "BUYER" ? <ViewBuyer /> : <EscrowDetails />
+                profile.uuid === EscrowData?.data?.product?.buyer?.uuid ? <ViewBuyer /> : <EscrowDetails />
             }
         </DashboardLayout>
     )

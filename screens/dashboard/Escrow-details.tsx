@@ -111,31 +111,22 @@ const EscrowDetails = () => {
             {/* Status */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
               <p className="text-sm text-gray-500">Status</p>
-              <Label label={EscrowData?.data?.status} />
+              <Label label={EscrowData?.data?.escrow.status} />
 
             </div>
 
             {/* Other Details */}
             {[
               { label: "Buyer Name", value: EscrowData?.data?.status },
-              {
-                label: "Phone number",
-                value: (
-                  <div className="flex items-center gap-2">
-                    {data.phoneNumber}
-                    <PiCopyLight className="text-gray-400 cursor-pointer" />
-                  </div>
-                ),
-              },
-              { label: "Product name", value: data.productName },
-              { label: "Description", value: EscrowData?.data?.description },
-              { label: "Amount", value: `₦${EscrowData?.data?.amount.toLocaleString()}` },
-              { label: "Quantity", value: EscrowData?.data?.quantity },
+              { label: "Product name", value: EscrowData?.data?.product.productName },
+              { label: "Description", value: EscrowData?.data?.product.description },
+              { label: "Amount", value: `₦${EscrowData?.data?.escrow.amount.toLocaleString()}` },
+              { label: "Quantity", value: EscrowData?.data?.product.quantity },
               {
                 label: "Email",
                 value: (
                   <div className="flex items-center gap-2">
-                    {data.email}
+                     {EscrowData?.data?.product.seller.email}
                     <PiCopyLight className="text-gray-400 cursor-pointer" />
                   </div>
                 ),

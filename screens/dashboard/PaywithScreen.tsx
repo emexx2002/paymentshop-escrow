@@ -15,8 +15,8 @@ const PaywithScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [isAgreed, setIsAgreed] = useState(false) 
-  
+  const [isAgreed, setIsAgreed] = useState(false)
+
 
   const handleStepClick = (step: any) => {
     if (step < 1) {
@@ -37,10 +37,21 @@ const PaywithScreen = () => {
       "sellerFirstName": "",
       "sellerLastName": "",
       "sellerPhone": "",
-      "sellerEmail": ""
+      "sellerEmail": "",
+      "expectedDeliveryDate": ""
     },
     onSubmit: (values) => {
-      handleCreate.mutate(values)
+      const dateValue = form.values.expectedDeliveryDate; // e.g., "2025-01-16"
+      const formattedDate = `${dateValue} 00:00:00`;
+      // Create a Date object
+      
+
+      // console.log(isoString);
+      const body = {
+        ...values,
+        expectedDeliveryDate: formattedDate
+      }
+      handleCreate.mutate(body)
     }
   })
 
@@ -118,6 +129,7 @@ const PaywithScreen = () => {
                       <TextInput name='totalAmount' label='Total Amount' placeholder="NGN" />
 
                     </div>
+                    <TextInput name="expectedDeliveryDate" type="date" placeholder="Enter Date" label='Expected Delivery Date' />
                     <FileUpload name='imageUrl' />
                   </div>
                 </div>
@@ -178,7 +190,11 @@ const PaywithScreen = () => {
                     </div>
                     <div className='flex py-[15px] items-center justify-between'>
                       <h3 className='text-sm text-[#5F738C]'>Amount</h3>
-                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.totalAmount}0</h3>
+                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.totalAmount}</h3>
+                    </div>
+                    <div className='flex py-[15px] items-center justify-between'>
+                      <h3 className='text-sm text-[#5F738C]'>Expected Delivery Date</h3>
+                      <h3 className='text-sm text-[#1F2126] font-semibold'>{form.values.expectedDeliveryDate}</h3>
                     </div>
                   </div>
                   <h3 className='mt-8 mb-2 text-sm text-[#5F738C] font-semibold'>Vendor's Details</h3>
@@ -213,7 +229,7 @@ const PaywithScreen = () => {
                 currentStep < 3 ? (
                   <Button className='px-6' onClick={() => handleStepClick(currentStep + 1)} label='continue' type='button' />) :
                   (
-                    <Button  isLoading={handleCreate.isLoading} className='px-6' disabled={!isAgreed && form.isValid} label='Create escrow payment' type='submit' />
+                    <Button isLoading={handleCreate.isLoading} className='px-6' disabled={!isAgreed && form.isValid} label='Create escrow payment' type='submit' />
 
                   )
 

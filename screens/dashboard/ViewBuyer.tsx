@@ -75,32 +75,32 @@ const ViewBuyer = () => {
 
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Status</h3>
-                <Label label={EscrowData?.data?.status} />
+                <Label label={EscrowData?.data?.escrow.status} />
 
               </div>
 
               {/* Product Details */}
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Product Name</h3>
-                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.productName}</h3>
+                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.product.productName}</h3>
               </div>
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Description</h3>
                 <h3 className="text-sm text-[#1F2126] font-semibold">
-                  {EscrowData?.data?.description}
+                  {EscrowData?.data?.product.description}
                 </h3>
               </div>
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Quantity</h3>
-                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.quantity}</h3>
+                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.product.quantity}</h3>
               </div>
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Amount</h3>
-                <h3 className="text-sm text-[#1F2126] font-semibold">₦{EscrowData?.data?.amount.toLocaleString()}</h3>
+                <h3 className="text-sm text-[#1F2126] font-semibold">₦{EscrowData?.data?.escrow.amount.toLocaleString()}</h3>
               </div>
               <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Vendor Name</h3>
-                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.sellerFirstName} {EscrowData?.data?.sellerLastName}</h3>
+                <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.product.seller.firstName} {EscrowData?.data?.product.seller.lastName}</h3>
               </div>
               {/* <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
             <h3 className="text-sm text-[#5F738C]">Phone Number</h3>
@@ -109,7 +109,7 @@ const ViewBuyer = () => {
               <div className="flex justify-between items-center">
                 <h3 className="text-sm text-[#5F738C]">Email</h3>
                 <h3 className="text-sm text-[#1F2126] font-semibold">
-                  {EscrowData?.data?.sellerEmail}
+                  {EscrowData?.data?.product.seller.email}
                 </h3>
               </div>
             </div>
