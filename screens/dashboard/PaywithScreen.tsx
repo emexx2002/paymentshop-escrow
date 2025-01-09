@@ -86,7 +86,7 @@ const PaywithScreen = () => {
   return (
     <div className='w-full max-w-[630px]' >
       <Modal open={open} onClick={() => setOpen(false)}>
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col gap-4 items-center justify-center'>
           <h3 className='text-base text-center text-[#1F2126] font-semibold '>Payment Details</h3>
 
           <h3 className='text-xl text-center '>Amount: NGN{details.totalAmount}</h3>
