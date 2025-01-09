@@ -27,32 +27,32 @@ const ViewBuyer = () => {
     })
 
 
-    const handleCancelPayment = useMutation(async () => {
-      await EscrowServices.buyerCancelEscrow(id);
-      
-    }, {
-      onSuccess: () => {
-        refetch();
-      },
-      onError: (error) => {
-        console.log(error);  
-      }
-    }
-  
-  )
+  const handleCancelPayment = useMutation(async () => {
+    await EscrowServices.buyerCancelEscrow(id);
 
-  const handleReleasePayment = useMutation(async () => {
-    await EscrowServices.releaseEscrowPayment(id);
-    
-  } , {      
+  }, {
     onSuccess: () => {
       refetch();
     },
     onError: (error) => {
-      console.log(error);  
+      console.log(error);
     }
   }
-)
+
+  )
+
+  const handleReleasePayment = useMutation(async () => {
+    await EscrowServices.releaseEscrowPayment(id);
+
+  }, {
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  }
+  )
 
   // Example data for display (replace with actual API data if available)
   console.log(EscrowData)
@@ -116,7 +116,8 @@ const ViewBuyer = () => {
 
 
             {/* Timeline */}
-            <div className="w-[476px] bg-white rounded-[10px] border border-[#E1E6ED] relative p-6">
+
+            {EscrowData?.data?.escrow.status !== "CANCELED" && <div className="w-[476px] bg-white rounded-[10px] border border-[#E1E6ED] relative p-6">
               <div className="flex items-start gap-4 relative">
                 <div className="flex flex-col items-center">
                   <input
@@ -138,8 +139,8 @@ const ViewBuyer = () => {
                   <h5 className="text-xs text-[#5F738C]">
                     We have sent the escrow payment to the seller.
                   </h5>
-                  <button onClick={() => handleCancelPayment.mutate()}  disabled={handleCancelPayment.isLoading}  className="mt-2 px-3 py-1 border border-[#E1E6ED] text-sm text-[#1F2126] rounded-xl">
-                   {handleCancelPayment.isLoading && <Spinner height={12} width={12} />} Cancel payment
+                  <button onClick={() => handleCancelPayment.mutate()} disabled={handleCancelPayment.isLoading} className="mt-2 px-3 py-1 border border-[#E1E6ED] text-sm text-[#1F2126] rounded-xl">
+                    {handleCancelPayment.isLoading && <Spinner height={12} width={12} />} Cancel payment
                   </button>
                 </div>
                 <h5 className="text-xs text-[#5F738C] absolute right-0">03:00 PM</h5>
@@ -209,11 +210,11 @@ const ViewBuyer = () => {
                   <h5 className="text-xs text-[#5F738C]">Tap on the button below to complete this order.</h5>
                   {
                     EscrowData?.data?.status === "DELIVERED" &&
-                    <button onClick={() => handleReleasePayment.mutate()}  disabled={handleReleasePayment.isLoading}  className="mt-2 px-3 py-1 border border-[#E1E6ED] bg-blue-500 text-sm text-white bg-primary rounded-xl">
-                   {handleReleasePayment.isLoading && <Spinner height={12} width={12} />} Release payment
-                  </button>
+                    <button onClick={() => handleReleasePayment.mutate()} disabled={handleReleasePayment.isLoading} className="mt-2 px-3 py-1 border border-[#E1E6ED] bg-blue-500 text-sm text-white bg-primary rounded-xl">
+                      {handleReleasePayment.isLoading && <Spinner height={12} width={12} />} Release payment
+                    </button>
                   }
-                  
+
                 </div>
                 <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
               </div>
@@ -231,7 +232,8 @@ const ViewBuyer = () => {
                 </div>
                 <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
               </div>
-            </div>
+            </div>}
+
           </div>
       }
 
