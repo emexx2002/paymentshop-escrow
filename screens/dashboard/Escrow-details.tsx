@@ -117,7 +117,7 @@ const EscrowDetails = () => {
 
             {/* Other Details */}
             {[
-              { label: "Buyer Name", value: EscrowData?.data?.status },
+              { label: "Buyer Name", value: `${EscrowData?.data?.product.buyer.firstName} ${EscrowData?.data?.product.buyer.lastName}` },
               { label: "Product name", value: EscrowData?.data?.product.productName },
               { label: "Description", value: EscrowData?.data?.product.description },
               { label: "Amount", value: `₦${EscrowData?.data?.escrow.amount.toLocaleString()}` },

@@ -10,12 +10,14 @@ import { useMutation } from 'react-query';
 import { EscrowServices } from '../../services/escrow';
 import Modal from '../../components/Modal/Modal';
 import toast from 'react-hot-toast';
+import { FaCopy } from 'react-icons/fa';
 
 const PaywithScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isAgreed, setIsAgreed] = useState(false)
+  const [details, setDetails] = useState<any>({})
 
 
   const handleStepClick = (step: any) => {
@@ -44,7 +46,7 @@ const PaywithScreen = () => {
       const dateValue = form.values.expectedDeliveryDate; // e.g., "2025-01-16"
       const formattedDate = `${dateValue} 00:00:00`;
       // Create a Date object
-      
+
 
       // console.log(isoString);
       const body = {
@@ -63,7 +65,9 @@ const PaywithScreen = () => {
       onSuccess: (data) => {
         toast.success(`payment sent to ${form.values.sellerEmail}`)
         form.resetForm()
-        router.push('/dashboard')
+        setDetails(data.data.data)
+        setOpen(true)
+        // router.push('/dashboard')
       },
       onError: (error: any) => {
         toast.error(
@@ -73,10 +77,28 @@ const PaywithScreen = () => {
     }
   )
 
+  const handleTransferMade = () => {
+      setOpen(false)
+        router.push('/dashboard')
+
+  }
+
   return (
     <div className='w-full max-w-[630px]' >
       <Modal open={open} onClick={() => setOpen(false)}>
-        <div>
+        <div className='flex flex-col items-center justify-center'>
+          <h3 className='text-base text-center text-[#1F2126] font-semibold '>Payment Details</h3>
+
+          <h3 className='text-xl text-center '>Amount: NGN{details.totalAmount}</h3>
+          <div className='flex items-center gap-2'>
+            <h3 className='text-xl text-center '>Account Number: {details.virtualAccountNumber}</h3>
+            <button onClick={() => navigator.clipboard.writeText(details.virtualAccountNumber)}> <FaCopy /></button>
+          </div>
+
+          <h5>Account Name: {details.virtualAccountName}</h5>
+          <h3>Bank: {details.virtualAccountBank}</h3>
+
+          <Button onClick={handleTransferMade} label='I have made the transfer' />
 
         </div>
 

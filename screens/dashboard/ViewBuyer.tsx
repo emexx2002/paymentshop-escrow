@@ -106,12 +106,30 @@ const ViewBuyer = () => {
             <h3 className="text-sm text-[#5F738C]">Phone Number</h3>
             <h3 className="text-sm text-[#1F2126] font-semibold">080 0000 0000</h3>
           </div> */}
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                 <h3 className="text-sm text-[#5F738C]">Email</h3>
                 <h3 className="text-sm text-[#1F2126] font-semibold">
                   {EscrowData?.data?.product.seller.email}
                 </h3>
               </div>
+
+              {
+                EscrowData?.data?.escrow.status === "AWAITING_PAYMENT" &&
+                <>
+                  <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
+                    <h3 className="text-sm text-[#5F738C]">Account Number</h3>
+                    <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.escrow.virtualAccountNumber.toLocaleString()}</h3>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
+                    <h3 className="text-sm text-[#5F738C]">Account Name</h3>
+                    <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.escrow.virtualAccountName.toLocaleString()}</h3>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
+                    <h3 className="text-sm text-[#5F738C]">Bank Name</h3>
+                    <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.escrow.virtualAccountBank	.toLocaleString()}</h3>
+                  </div>
+                </>
+              }
             </div>
 
 
