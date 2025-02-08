@@ -119,7 +119,7 @@ const RegisterScreen = () => {
                                 </select>
                             </div>
 
-                            <TextInput name='accountNumber' label='Account Number' type="number" placeholder="0123456789" />
+                            <TextInput tooltip='Bank details are required for payment processing and fund transfers related to your account activities.' name='accountNumber' label='Account Number' type="number" placeholder="0123456789" />
 
                         </div>
                         <div className='my-4'>

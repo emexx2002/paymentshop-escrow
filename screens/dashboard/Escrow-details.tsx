@@ -34,10 +34,10 @@ const EscrowDetails = () => {
     phoneNumber: "080 0000 0000",
     email: "rachael@gmail.com",
     timeline: [
-      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer", action1Func: () => handleCancel.mutate(), actionFunc: () => handleAccept.mutate(), checked: ["ACCEPTED", "DELIVERED", "CANCELED"].includes(EscrowData?.data?.status) ? true : false },
-      { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered", actionFunc: () => handleMarkDelivered.mutate(), checked: EscrowData?.data?.status === "DELIVERED" ? true : false },
+      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer", action1Func: () => handleCancel.mutate(), actionFunc: () => handleAccept.mutate(), checked: ["ACCEPTED", "DELIVERED", "CANCELED"].includes(EscrowData?.data?.escrow?.status) ? true : false },
+      { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered", actionFunc: () => handleMarkDelivered.mutate(), checked: EscrowData?.data?.escrow?.status === "DELIVERED" ? true : false },
       // { time: "03:00 PM", text: "Request payment", action: "Request payment", actionFunc: () => console.log("Request Payment") },
-      { time: "03:00 PM", text: "Escrow complete", checked: EscrowData?.data?.status === "COMPLETED" ? true : false },
+      { time: "03:00 PM", text: "Escrow complete", checked: EscrowData?.data?.escrow?.status === "COMPLETED" ? true : false },
     ],
   };
 
@@ -107,7 +107,7 @@ const EscrowDetails = () => {
         {/* Main Section */}
         <div className="mt-6 flex-wrap flex gap-6">
           {/* Left Section: Details */}
-          <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+          <div className="md:w-[476px] w-full bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             {/* Status */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
               <p className="text-sm text-gray-500">Status</p>
@@ -145,7 +145,7 @@ const EscrowDetails = () => {
 
           {/* Right Section: Timeline */}
           {
-            EscrowData?.data?.status !== "CANCELED" && <div className="w-[476px] bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            EscrowData?.data?.status !== "CANCELED" && <div className="md:w-[476px] w-full bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 
             {data.timeline.map((item, index) => (
               <div key={index} className="relative flex items-start gap-4 ">

@@ -152,7 +152,11 @@ const PaywithScreen = () => {
 
                     </div>
                     <TextInput name="expectedDeliveryDate" type="date" placeholder="Enter Date" label='Expected Delivery Date' />
+                    <div>
+                      <label className="text-[14px] mb-2" htmlFor="product-image">Upload Product Image</label>
                     <FileUpload name='imageUrl' />
+
+                    </div>
                   </div>
                 </div>
               )

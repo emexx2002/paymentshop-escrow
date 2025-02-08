@@ -8,12 +8,14 @@ interface TextInputProps extends FieldAttributes<any> {
   label?: string;
   name: string;
   rightIcon?: any;
+  tooltip?: string;
   wrapperClass?: string;
   onRightIconClick?: () => void;
 }
 
 const TextInput = ({
   leftIcon,
+  tooltip,
   rightIcon,
   wrapperClass,
   label,
@@ -32,14 +34,30 @@ const TextInput = ({
   };
   return (
     <div className={`flex flex-col ${wrapperClass} w-full text-xs md:text-sm lg:text-base`}>
+      <div className="flex w-full justify-between items-center gap-1">
       {label && (
         <label
           htmlFor={restProps?.id || name}
-          className='font-normal text-sm text-[#5F738C] capitalize mb-1'
+          className='font-normal text-sm  capitalize mb-1'
         >
           {label}
         </label>
       )}
+
+      {
+        tooltip && (
+          <div className="group relative mb-1 ">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-gray-500">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+          </svg>
+          <div className="invisible  text-xs group-hover:visible absolute z-10 w-64 p-2 text-gray-500 bg-white border rounded shadow-lg">
+                {tooltip}
+            </div>
+        </div>
+        )
+      }
+      </div>
+      
 
       <div className='relative'>
         {name === "phone" ? (
