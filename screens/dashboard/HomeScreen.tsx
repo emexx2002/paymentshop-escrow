@@ -67,18 +67,49 @@ const HomeScreen = () => {
 
             </div>
 
-            <Link href={"/dashboard/pay-with-escrow"}>
-              <div className='w-full mb-8 h-[71px] bg-white flex justify-between items-center px-5 rounded-[10px] border border-[#E1E6ED]'>
-                <div>
-                  <h3 className='text-[#1F2126] font-semibold'>Pay with Escrow</h3>
-                  <h5 className='text-[#5F738C] text-sm'>Make payment using secured escrow service</h5>
-
+            <div className="flex gap-4 mb-8 w-full">
+              <Link href="/dashboard/pay-with-escrow" className="flex-1">
+                <div className="h-[120px] bg-white rounded-[10px] border border-[#E1E6ED] p-5">
+                  <div className="flex items-center justify-between h-full">
+                    <div className=''>
+                    <h3 className="text-[#1F2126] font-semibold">Pay with Escrow</h3>
+                    <p className="text-[#5F738C] text-sm">Make payment using secured escrow service</p>
+                    </div>
+                   
+                    <div className="flex justify-end">
+                      <div className="bg-[#398DFA] rounded-full p-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M8.91 19.92L15.43 13.4C16.2 12.63 16.2 11.37 15.43 10.6L8.91 4.08" 
+                            stroke="white" strokeWidth="1.5" strokeMiterlimit="10" 
+                            strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </Link>
 
-              </div>
-            </Link>
-
-
+              <Link href="/dashboard/#receive-with-escrow" className="flex-1">
+                <div className="h-[120px] bg-white rounded-[10px] border border-[#E1E6ED] p-5">
+                  <div className="flex items-center justify-between h-full">
+                    <div>
+                    <h3 className="text-[#1F2126] font-semibold">Receive with Escrow</h3>
+                    <p className="text-[#5F738C] text-sm">Make payment using secured escrow service</p>
+                    </div>
+                   
+                    <div className="flex justify-end">
+                      <div className="bg-[#7A33FF] rounded-full p-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M8.91 19.92L15.43 13.4C16.2 12.63 16.2 11.37 15.43 10.6L8.91 4.08" 
+                            stroke="white" strokeWidth="1.5" strokeMiterlimit="10" 
+                            strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
 
             <div className='w-full bg-white min-h-[210px]  p-5 rounded-[10px] border border-[#E1E6ED]'>
               <div className='grid md:grid-cols-2 grid-cols-1'>

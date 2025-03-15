@@ -15,4 +15,5 @@ export const EscrowServices= {
     sellerCancelOrAcceptEscrow: (id:string, payload:any) => createApiClient().patch(`/escrow/${id}`, payload),
     releaseEscrowPayment: (id:string) => createApiClient().patch(`/escrow/payment/${id}`),
     setEscrowDelivered: (id:string) => createApiClient().patch(`/escrow/status/${id}`),
+    confirmPayment: (id:string) => createApiClient().patch(`/escrow/buyer/confirm/payment/${id}`),
 }

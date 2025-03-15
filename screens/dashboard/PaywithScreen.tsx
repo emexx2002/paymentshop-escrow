@@ -77,6 +77,27 @@ const PaywithScreen = () => {
     }
   )
 
+  const handleConfirmPayment = useMutation(
+    async (values: any) => {
+      return EscrowServices.confirmPayment(values)
+    },
+    {
+    onSuccess: (data) => {
+      toast.success(`payment sent to ${form.values.sellerEmail}`)
+      form.resetForm()
+      setDetails(data.data.data)
+      setOpen(true)
+      // router.push('/dashboard')
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response.data.message
+      )
+    }
+  }
+  ) 
+  
+
   const handleTransferMade = () => {
       setOpen(false)
         router.push('/dashboard')

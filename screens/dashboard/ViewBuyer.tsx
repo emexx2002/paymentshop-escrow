@@ -140,7 +140,7 @@ const ViewBuyer = () => {
                 <div className="flex flex-col items-center">
                   <input
                     type="checkbox"
-                    checked={EscrowData?.data?.escrow.status === "CANCELLED" ? false : true}
+                    checked={EscrowData?.data?.escrow.status === "CANCELLED" || EscrowData?.data?.escrow.status === "AWAITING_PAYMENT"  ? false : true}
                     className="w-5 h-5 z-10 relative appearance-none border border-[#9DBCDC] rounded checked:bg-[#29B32F] checked:border-[#29B32F] checked:after:content-['✔'] checked:after:text-white checked:after:block checked:after:text-center"
                     readOnly
                   />
@@ -165,7 +165,7 @@ const ViewBuyer = () => {
                   }
 
                 </div>
-                <h5 className="text-xs text-[#5F738C] absolute right-0">03:00 PM</h5>
+                <h5 className="text-xs text-[#5F738C] absolute right-0">{EscrowData?.data?.escrow?.paymentTimeline}</h5>
               </div>
               <div className="flex items-start gap-4 relative">
                 <div className="flex flex-col items-center">
@@ -188,7 +188,7 @@ const ViewBuyer = () => {
                   <h3 className="text-sm text-[#1F2126] font-semibold">Seller has accepted</h3>
                   <h5 className="text-xs text-[#5F738C]">The seller has accepted your escrow payment.</h5>
                 </div>
-                <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
+                <h5 className="text-xs text-[#5F738C] absolute right-0">{EscrowData?.data?.escrow?.acceptanceTimeline}</h5>
               </div>
               <div className="flex items-start gap-4 relative">
                 <div className="flex flex-col items-center">
@@ -210,7 +210,7 @@ const ViewBuyer = () => {
                   <h3 className="text-sm text-[#1F2126] font-semibold">Seller has delivered order</h3>
                   <h5 className="text-xs text-[#5F738C]">Your order has been delivered.</h5>
                 </div>
-                <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
+                <h5 className="text-xs text-[#5F738C] absolute right-0">{EscrowData?.data?.escrow?.deliveryTimeLine}</h5>
               </div>
               <div className="flex items-start gap-4 relative">
                 <div className="flex flex-col items-center">
@@ -238,7 +238,7 @@ const ViewBuyer = () => {
                   }
 
                 </div>
-                <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
+                <h5 className="text-xs text-[#5F738C] absolute right-0">{EscrowData?.data?.escrow?.releasePaymentTimeline}</h5>
               </div>
               <div className="flex items-start gap-4 relative">
                 <div className="flex flex-col items-center">
@@ -252,7 +252,7 @@ const ViewBuyer = () => {
                   <h3 className="text-sm text-[#1F2126] font-semibold">Escrow complete</h3>
                   <h5 className="text-xs text-[#5F738C]">This escrow payment has been completed.</h5>
                 </div>
-                <h5 className="text-xs text-[#5F738C] absolute right-0">05:00 PM</h5>
+                <h5 className="text-xs text-[#5F738C] absolute right-0">{EscrowData?.data?.escrow?.completedTimeline}</h5>
               </div>
             </div>}
 

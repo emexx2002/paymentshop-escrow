@@ -4,6 +4,7 @@ import { PiCopyLight } from "react-icons/pi";
 import { useMutation, useQuery } from "react-query";
 import { EscrowServices } from "../../services/escrow";
 import Label from "../../components/Label/Label";
+import toast from "react-hot-toast";
 
 const EscrowDetails = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const EscrowDetails = () => {
     phoneNumber: "080 0000 0000",
     email: "rachael@gmail.com",
     timeline: [
-      { time: "03:00 PM", text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer", action1Func: () => handleCancel.mutate(), actionFunc: () => handleAccept.mutate(), checked: ["ACCEPTED", "DELIVERED", "CANCELED"].includes(EscrowData?.data?.escrow?.status) ? true : false },
+      { time: EscrowData?.data?.escrow?.updatedTime, text: "Accept Escrow offer", action1: "Cancel payment", action: "Accept offer", action1Func: () => handleCancel.mutate(), actionFunc: () => handleAccept.mutate(), checked: ["ACCEPTED", "DELIVERED", "CANCELED"].includes(EscrowData?.data?.escrow?.status) ? true : false },
       { time: "03:00 PM", text: "Mark as delivered", action: "Marked as delivered", actionFunc: () => handleMarkDelivered.mutate(), checked: EscrowData?.data?.escrow?.status === "DELIVERED" ? true : false },
       // { time: "03:00 PM", text: "Request payment", action: "Request payment", actionFunc: () => console.log("Request Payment") },
       { time: "03:00 PM", text: "Escrow complete", checked: EscrowData?.data?.escrow?.status === "COMPLETED" ? true : false },
@@ -64,6 +65,9 @@ const EscrowDetails = () => {
     onSuccess: () => {
       console.log("Escrow cancelled");
       refetch()
+    },
+    onError: (error:any) => {
+      toast.error(error.response.data.message);
     }
   });
 

@@ -9,6 +9,7 @@ import { AuthServices } from '../../services/auth';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 
 
@@ -40,7 +41,8 @@ const RegisterScreen = () => {
         "lastname": "",
         "address": "Test address",
         "accountNumber": "",
-        "bankCode": ""
+        "bankCode": "",
+        "backUpPhoneNumber": ""
     };
     const form = useFormik({
         initialValues: userSignUpInfo,
@@ -68,29 +70,37 @@ const RegisterScreen = () => {
 
     console.log(form.errors)
     return (
-        <div className="w-full h-screen flex flex-row my-2 items-center justify-center">
-            <div className='lg:w-[406px] px-4 md:px-0  h-auto'>
+        <div className="w-screen h-screen flex my-2 items-center justify-center">
+            <div className='lg:w-[506px] px-3 '>
                 <h5 className='text-sm text-[#5F738C]'>Get strarted</h5>
                 <h3 className='text-xl font-bold text-[#1F2126]'>Create an account</h3>
 
-                <FormikProvider value={form}>
-                    <form className='my-6' onSubmit={form.handleSubmit}>
-                        <div className='grid gap-2 grid-cols-2'>
-                            <div>
-                                <TextInput placeholder="Enter your first name" name='firstName' label='First name' />
+                <div>
+                    <FormikProvider value={form}>
+                        <form className='my-6 w-full' onSubmit={form.handleSubmit}>
+                            <div className='grid w-full gap-2 grid-cols-2'>
+                                <div>
+                                    <TextInput placeholder="Enter your first name" name='firstName' label='First name' />
+                                </div>
+                                <div>
+                                    <TextInput placeholder="Enter your last name" name='lastname' label='Last name' />
+                                </div>
                             </div>
-                            <div>
-                                <TextInput placeholder="Enter your last name" name='lastname' label='Last name' />
+                            <div className='my-4 w-full grid gap-2 grid-cols-2'>
+                                <div className=''>
+                                    <TextInput placeholder="Enter your phone number" name='phone' label='phone number' />
+                                </div>
+
+                                <div className=''>
+                                    <TextInput placeholder="Enter your backup phone number" name='backUpPhoneNumber' label='phone number' />
+                                </div>
                             </div>
-                        </div>
-                        <div className='my-4'>
-                            <TextInput placeholder="Enter your email" name='phone' label='phone number' />
-                        </div>
-                        <div className='my-4'>
-                            <TextInput placeholder="Enter your email" type="email" name='email' label='email' />
-                        </div>
-                        <div className='grid my-4 gap-2 grid-cols-2'>
-                            <div className="">
+
+                            <div className='my-4 w-full'>
+                                <TextInput placeholder="Enter your email" type="email" name='email' label='email' />
+                            </div>
+
+                            <div className="w-full">
                                 <label className="text-[14px] mb-2" htmlFor="bank-name">
                                     Bank Name
                                 </label>
@@ -119,18 +129,25 @@ const RegisterScreen = () => {
                                 </select>
                             </div>
 
-                            <TextInput tooltip='Bank details are required for payment processing and fund transfers related to your account activities.' name='accountNumber' label='Account Number' type="number" placeholder="0123456789" />
+                            <div className='my-4 w-full'>
+                                <TextInput  name='accountNumber' label='Account Number' type="number" placeholder="0123456789" />
+                               <span className='text-xs mt-1 flex items-center gap-2 text-gray-500'><AiOutlineExclamationCircle /> Bank details are required in order to process a refund if a transaction fails</span> 
+                            </div>
 
-                        </div>
-                        <div className='my-4'>
-                            <TextInput name='password' type="password" label='password' placeholder="Enter your password" />
-                        </div>
-                        <Button isLoading={handleRegister.isLoading} disabled={!form.isValid} size='large' label='Sign Up' className='w-full  flex items-center !my-6 justify-center' />
 
-                        <span className='my-4 text-sm'>Don’t have an account?<Link className='text-[#398DFA]' href={"/"}> Sign in</Link> </span>
 
-                    </form>
-                </FormikProvider>
+                            <div className='my-4 w-full'>
+                                <TextInput name='password' type="password" label='password' placeholder="Enter your password" />
+                            </div>
+                            <Button isLoading={handleRegister.isLoading} disabled={!form.isValid} size='large' label='Sign Up' className='w-full  flex items-center !my-6 justify-center' />
+
+                            <span className='my-4 text-sm'>Don’t have an account?<Link className='text-[#398DFA]' href={"/"}> Sign in</Link> </span>
+
+                        </form>
+                    </FormikProvider>
+                </div>
+
+
 
             </div>
 

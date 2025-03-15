@@ -60,7 +60,7 @@ const TextInput = ({
       
 
       <div className='relative'>
-        {name === "phone" ? (
+        {name === "phone" || name === "backUpPhoneNumber" ? (
           <PhoneInput
             country={"ng"}
             onlyCountries={["ng"]}
