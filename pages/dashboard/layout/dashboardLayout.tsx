@@ -19,12 +19,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <AuthGuard>
             <div className='h-auto px-3 min-h-screen bg-[#F9FBFC]'>
-                <header className='w-full h-[62px] bg-white flex justify-center gap-3 items-center ' >
-                    <Link className='px-[10px] text-sm font-semibold text-[#1F2126]' href={"/dashboard"}>Home</Link>
-                    <Link className='px-[10px] text-sm font-semibold text-[#1F2126]' href={"#"}>Vendors</Link>
+                <header className='w-full h-[62px] bg-white flex justify-between items-center px-3'>
+                    <div className='flex items-center gap-3'>
+                        <img src="/logo.svg" alt="Logo" className='h-8' />
+                       
+                    </div>
+                    <div>
+                         <Link className='px-[10px] text-sm font-semibold text-[#1F2126]' href={"/dashboard"}>Home</Link>
+                        <Link className='px-[10px] text-sm font-semibold text-[#1F2126]' href={"#"}>Vendors</Link>
+                    </div>
                     <button onClick={handleLogout} className='px-[10px] text-sm font-semibold text-[#25479e]'>Logout</button>
                 </header>
-                <div className='flex w-full  mx-auto justify-center py-12'>
+                <div className='flex w-full mx-auto justify-center py-12'>
                     {children}
                 </div>
             </div>

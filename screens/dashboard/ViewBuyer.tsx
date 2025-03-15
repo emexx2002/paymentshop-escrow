@@ -126,7 +126,7 @@ const ViewBuyer = () => {
                   </div>
                   <div className="flex justify-between items-center border-b border-[#E1E6ED] pb-2 mb-5">
                     <h3 className="text-sm text-[#5F738C]">Bank Name</h3>
-                    <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.escrow.virtualAccountBank	.toLocaleString()}</h3>
+                    <h3 className="text-sm text-[#1F2126] font-semibold">{EscrowData?.data?.escrow.virtualAccountBank.toLocaleString()}</h3>
                   </div>
                 </>
               }

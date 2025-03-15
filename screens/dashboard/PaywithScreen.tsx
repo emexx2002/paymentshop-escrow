@@ -28,6 +28,8 @@ const PaywithScreen = () => {
 
   };
 
+
+  console.log(details)
   const form = useFormik({
     initialValues: {
       "productName": "",
@@ -83,11 +85,8 @@ const PaywithScreen = () => {
     },
     {
     onSuccess: (data) => {
-      toast.success(`payment sent to ${form.values.sellerEmail}`)
-      form.resetForm()
-      setDetails(data.data.data)
-      setOpen(true)
-      // router.push('/dashboard')
+      toast.success(`payment confirmed`)
+      router.push('/dashboard')
     },
     onError: (error: any) => {
       toast.error(
@@ -119,7 +118,7 @@ const PaywithScreen = () => {
           <h5>Account Name: {details.virtualAccountName}</h5>
           <h3>Bank: {details.virtualAccountBank}</h3>
 
-          <Button onClick={handleTransferMade} label='I have made the transfer' />
+          <Button isLoading={handleConfirmPayment.isLoading} onClick={() => handleConfirmPayment.mutate(details?.uuid)} label='I have made the transfer' />
 
         </div>
 
