@@ -20,7 +20,11 @@ const validationSchema = Yup.object({
         .required("*Email is required"),
     password: Yup.string().trim()
         .required("*Password is required")
-        .min(8, 'Must be at least 8 characters'),
+        .min(8, 'Must be at least 8 characters')
+        .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Must contain at least one lowercase letter')
+        .matches(/[0-9]/, 'Must contain at least one number')
+        .matches(/[@$!%*?&#]/, 'Must contain at least one special character'),
     firstName: Yup.string().trim().required("*First name is required"),
     lastname: Yup.string().trim().required("*Last name is required"),
     bankCode: Yup.string().trim().required("*Bank is required"),
